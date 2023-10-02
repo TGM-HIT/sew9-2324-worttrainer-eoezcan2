@@ -20,6 +20,23 @@ public class WordTrainer {
         this.correctAnswers = 0;
         this.wrongAnswers = 0;
         this.tries = 0;
+
+        load();
+    }
+
+    private void load() {
+        WordTrainer loaded = this.saveStrategy.loadContent(this.filePath);
+        if(loaded != null) {
+            this.wordCards = loaded.getWordCards();
+            this.currentCard = loaded.getCurrentCard();
+            this.correctAnswers = loaded.getCorrectAnswers();
+            this.wrongAnswers = loaded.getWrongAnswers();
+            this.tries = loaded.getTries();
+        }
+    }
+
+    private void save() {
+        this.saveStrategy.saveContent(this.filePath, this);
     }
 
     private void randomizeCards() {
