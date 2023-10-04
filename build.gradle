@@ -10,12 +10,9 @@ repositories {
 }
 
 dependencies {
-    // implement org.json
-    implementation 'org.json:json:20210307'
-    // https://mvnrepository.com/artifact/com.thoughtworks.xstream/xstream
-    implementation 'com.thoughtworks.xstream:xstream:1.4.2'
+    implementation 'org.json:json:20230227'
     testImplementation 'org.junit.jupiter:junit-jupiter-api:5.7.0'
-    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.7.0'
+    testImplementation 'org.junit.jupiter:junit-jupiter-engine:5.7.0'
 }
 
 test {
