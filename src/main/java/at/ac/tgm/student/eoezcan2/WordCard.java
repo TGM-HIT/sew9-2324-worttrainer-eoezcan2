@@ -24,9 +24,6 @@ public class WordCard {
     }
 
     public void setWord(String word) {
-        if(!url.endsWith(".png") && !url.endsWith(".jpg") && !url.endsWith(".jpeg")) {
-            throw new IllegalArgumentException("URL is not an image!");
-        }
         this.word = word;
     }
 

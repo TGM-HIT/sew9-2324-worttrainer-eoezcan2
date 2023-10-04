@@ -4,6 +4,8 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.io.*;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 
 public class JsonSave implements SaveStrategy {
@@ -25,16 +27,14 @@ public class JsonSave implements SaveStrategy {
     }
 
     @Override
-    public WordTrainer loadContent(String filePath) {
+    public WordTrainer loadContent(String filePath, WordTrainer wordTrainer) {
         if(!new File(filePath).exists()) return null;
+        File file = new File(filePath);
 
         try {
-            BufferedReader bufferedReader = new BufferedReader(new FileReader(filePath));
-            String json = bufferedReader.readLine();
-            bufferedReader.close();
+            String content = new String(Files.readAllBytes(Paths.get(file.toURI())));
 
-            JSONObject jsonObject = new JSONObject(json);
-            WordTrainer wordTrainer = new WordTrainer(filePath);
+            JSONObject jsonObject = new JSONObject(content);
             wordTrainer.setWordCards(convertJSONArrayToArrayList(jsonObject.getJSONArray("wordCards")));
             wordTrainer.setCurrentCard(jsonObject.getInt("currentCard"));
             wordTrainer.setCorrectAnswers(jsonObject.getInt("correctAnswers"));
@@ -51,7 +51,7 @@ public class JsonSave implements SaveStrategy {
         ArrayList<WordCard> wordCards = new ArrayList<WordCard>();
         for(int i = 0; i < jsonArray.length(); i++) {
             JSONObject jsonObject = jsonArray.getJSONObject(i);
-            wordCards.add(new WordCard(jsonObject.getString("word"), jsonObject.getString("translation")));
+            wordCards.add(new WordCard(jsonObject.getString("url"), jsonObject.getString("word")));
         }
         return wordCards;
     }
