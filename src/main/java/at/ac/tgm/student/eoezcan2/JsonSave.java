@@ -51,7 +51,11 @@ public class JsonSave implements SaveStrategy {
         ArrayList<WordCard> wordCards = new ArrayList<WordCard>();
         for(int i = 0; i < jsonArray.length(); i++) {
             JSONObject jsonObject = jsonArray.getJSONObject(i);
-            wordCards.add(new WordCard(jsonObject.getString("url"), jsonObject.getString("word")));
+            try {
+                wordCards.add(new WordCard(jsonObject.getString("url"), jsonObject.getString("word")));
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
         }
         return wordCards;
     }
