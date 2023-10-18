@@ -1,11 +1,16 @@
 package at.ac.tgm.student.eoezcan2;
 
+import javax.imageio.ImageIO;
+import java.awt.*;
+import java.io.IOException;
+import java.net.URL;
+
 public class WordCard {
 
     private String url;
     private String word;
 
-    public WordCard(String url, String word) {
+    public WordCard(String url, String word) throws IOException {
         // Check if URL is an image
         setUrl(url);
         setWord(word);
@@ -15,11 +20,14 @@ public class WordCard {
         return url;
     }
 
-    public void setUrl(String url) {
-        if(!url.endsWith(".png") && !url.endsWith(".jpg") && !url.endsWith(".jpeg")) {
+    public void setUrl(String url) throws IllegalArgumentException, IOException {
+
+        Image image = ImageIO.read(new URL(url));
+        if(image != null){
+            this.url = url;
+        }else{
             throw new IllegalArgumentException("URL is not an image!");
         }
-        this.url = url;
     }
 
     public String getWord() {

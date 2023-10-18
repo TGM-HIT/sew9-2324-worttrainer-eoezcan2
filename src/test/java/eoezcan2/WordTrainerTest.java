@@ -5,6 +5,8 @@ import at.ac.tgm.student.eoezcan2.WordTrainer;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.io.IOException;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 public class WordTrainerTest {
@@ -25,13 +27,21 @@ public class WordTrainerTest {
 
     @Test
     public void testWordCountOne() {
-        this.wordTrainer.addCard(new WordCard("https://upload.wikimedia.org/wikipedia/commons/thumb/2/2f/Google_2015_logo.svg/368px-Google_2015_logo.svg.png", "Google"));
+        try {
+            this.wordTrainer.addCard(new WordCard("https://upload.wikimedia.org/wikipedia/commons/thumb/2/2f/Google_2015_logo.svg/368px-Google_2015_logo.svg.png", "Google"));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
         assertEquals(1, this.wordTrainer.getWordCards().size());
     }
 
     @Test
     public void testSerialization() {
-        this.wordTrainer.addCard(new WordCard("https://upload.wikimedia.org/wikipedia/commons/thumb/2/2f/Google_2015_logo.svg/368px-Google_2015_logo.svg.png", "Google"));
+        try {
+            this.wordTrainer.addCard(new WordCard("https://upload.wikimedia.org/wikipedia/commons/thumb/2/2f/Google_2015_logo.svg/368px-Google_2015_logo.svg.png", "Google"));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
         this.wordTrainer.save();
         WordTrainer wordTrainer = new WordTrainer("src/test/resources/words.json");
         assertEquals("Google", wordTrainer.getCardAt(0).getWord());
